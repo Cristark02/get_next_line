@@ -6,7 +6,7 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:26:39 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/12 16:23:47 by mmita            ###   ########.fr       */
+/*   Updated: 2023/02/12 18:56:46 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ char	*ft_update_memo(char *memo);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
+void	*ft_calloc(size_t count, size_t size);
+void	*ft_bzero(void *b, size_t n);
 
 #endif

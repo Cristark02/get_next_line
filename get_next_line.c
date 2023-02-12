@@ -6,13 +6,13 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:09:12 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/12 15:56:25 by mmita            ###   ########.fr       */
+/*   Updated: 2023/02/12 17:48:17 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *ft_update_memo(char *memo)
+char	*ft_update_memo(char *memo)
 {
 	int		i;
 	int		j;
@@ -22,32 +22,35 @@ char *ft_update_memo(char *memo)
 	j = 0;
 	while (memo[i] != '\0' && memo[i] != '\n')
 		i++;
-	if(!memo[i])
+	if (!memo[i])
 	{
 		free(memo);
 		return (0);
 	}
-	i++;
-	while (memo[i])
+	str = ft_calloc(ft_strlen(memo) - i + 1, sizeof(char));
+	if (!str)
 	{
-		str[i++] = memo[i++];
+		free(str);
+		return (0);
 	}
-	str[j] = '\0';
+	i++;
+	while (memo[i] != '\0')
+		str[j++] = memo[i++];
 	free(memo);
 	return (str);
 }
 
 char	*ft_return_line(char *memo)
 {
-	int		*i;
+	int		i;
 	char	*str;
-	
+
 	i = 0;
-	if (!memo)
+	if (!memo && *memo == '\0')
 		return (0);
-	while (memo[i] && memo[i] != '\n')
+	while (memo[i] != '\0' && memo[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) + (i + 2));
+	str = ft_calloc(i + 2, sizeof(char));
 	if (!str)
 		return (0);
 	i = 0;
@@ -56,12 +59,8 @@ char	*ft_return_line(char *memo)
 		str[i] = memo[i];
 		i++;
 	}
-	if (memo[i] && memo[i] == '\n')
-	{
+	if (memo[i] == '\n')
 		str[i] = '\n';
-		i++;
-	}
-	str[i] = '\0';
 	return (str);
 }
 
@@ -71,8 +70,8 @@ char	*ft_read_memory(int fd, char *memo)
 	int		byte_nbr;
 
 	byte_nbr = 1;
-	store = malloc((BUFFER_SIZE + 1) + (sizeof(char)));
-	if (!store)
+	store = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!store && !ft_strchr(memo, '\n'))
 		return (0);
 	while (byte_nbr > 0)
 	{
@@ -83,20 +82,19 @@ char	*ft_read_memory(int fd, char *memo)
 			free(store);
 			return (0);
 		}
+		if (byte_nbr == 0)
+			break ;
 		store[byte_nbr] = '\0';
 		memo = ft_strjoin(memo, store);
-		if (ft_strchr(store, '\n'))
-			break;
 	}
 	free(store);
 	return (memo);
-	
 }
 
-char	get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*memory;
-	char		return_line;
+	char		*return_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
