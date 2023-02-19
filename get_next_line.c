@@ -6,63 +6,11 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:09:12 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/12 17:48:17 by mmita            ###   ########.fr       */
+/*   Updated: 2023/02/19 14:37:04 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_update_memo(char *memo)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	while (memo[i] != '\0' && memo[i] != '\n')
-		i++;
-	if (!memo[i])
-	{
-		free(memo);
-		return (0);
-	}
-	str = ft_calloc(ft_strlen(memo) - i + 1, sizeof(char));
-	if (!str)
-	{
-		free(str);
-		return (0);
-	}
-	i++;
-	while (memo[i] != '\0')
-		str[j++] = memo[i++];
-	free(memo);
-	return (str);
-}
-
-char	*ft_return_line(char *memo)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	if (!memo && *memo == '\0')
-		return (0);
-	while (memo[i] != '\0' && memo[i] != '\n')
-		i++;
-	str = ft_calloc(i + 2, sizeof(char));
-	if (!str)
-		return (0);
-	i = 0;
-	while (memo[i] && memo[i] != '\n')
-	{
-		str[i] = memo[i];
-		i++;
-	}
-	if (memo[i] == '\n')
-		str[i] = '\n';
-	return (str);
-}
 
 char	*ft_read_memory(int fd, char *memo)
 {
@@ -82,13 +30,64 @@ char	*ft_read_memory(int fd, char *memo)
 			free(store);
 			return (0);
 		}
-		if (byte_nbr == 0)
+		else if (byte_nbr == 0)
 			break ;
 		store[byte_nbr] = '\0';
 		memo = ft_strjoin(memo, store);
 	}
 	free(store);
 	return (memo);
+}
+
+char	*ft_return_line(char *memo)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (!memo && *memo == '\0')
+		return (NULL);
+	while (memo[i] != '\0' && memo[i] != '\n')
+		i++;
+	str = ft_calloc(i + 2, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (memo[i] && memo[i] != '\n')
+	{
+		str[i] = memo[i];
+		i++;
+	}
+	if (memo[i] == '\n')
+		str[i] = '\n';
+	return (str);
+}
+
+char	*ft_update_memo(char *memo)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	while (memo[i] != '\0' && memo[i] != '\n')
+		i++;
+	if (!memo[i])
+	{
+		free(memo);
+		return (0);
+	}
+	str = ft_calloc(ft_strlen(memo) - i + 1, sizeof(char));
+	if (!str)
+	{
+		return (0);
+	}
+	i++;
+	while (memo[i] != '\0')
+		str[j++] = memo[i++];
+	free(memo);
+	return (str);
 }
 
 char	*get_next_line(int fd)

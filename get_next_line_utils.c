@@ -6,7 +6,7 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:23:51 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/12 19:20:10 by mmita            ###   ########.fr       */
+/*   Updated: 2023/02/19 14:34:46 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	*ft_bzero(void *b, size_t n)
 
 	ptr = (unsigned char *)b;
 	while (n-- > 0)
-		*(ptr++) = 0;
+		*(ptr++) = '\0';
 	return (0);
 }
 
@@ -66,11 +66,40 @@ void	*ft_calloc(size_t count, size_t size)
 	ptr = malloc(count * size);
 	if (ptr == NULL)
 		return (0);
-	ft_bzero(ptr, size * count);
+	ft_bzero(ptr, (size * count));
 	return (ptr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	size_t	c1;
+	size_t	c2;
+	size_t	strlen_s1;
+	size_t	strlen_s2;
+
+	if (!s1 && !s2)
+		return (NULL);
+	strlen_s1 = ft_strlen(s1);
+	strlen_s2 = ft_strlen(s2);
+	str = (char *)malloc(sizeof(char) * (strlen_s1 + strlen_s2 + 1));
+	if (!str)
+		return (0);
+	c1 = 0;
+	while (c1 < strlen_s1)
+	{
+		str[c1] = s1[c1];
+		c1++;
+	}
+	c2 = 0;
+	while (c2 < strlen_s2)
+		str[c1++] = s2[c2++];
+	str[c1] = '\0';
+	free (s1);
+	return (str);
+}
+
+/* char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	size_t	i;
@@ -96,4 +125,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i] = '\0';
 	return (str);
-}
+} */
