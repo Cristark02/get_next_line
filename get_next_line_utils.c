@@ -6,7 +6,7 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:23:51 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/19 14:34:46 by mmita            ###   ########.fr       */
+/*   Updated: 2023/02/19 17:59:31 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		i++;
 	}
@@ -70,6 +70,7 @@ void	*ft_calloc(size_t count, size_t size)
 	return (ptr);
 }
 
+/*
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
@@ -99,7 +100,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-/* char	*ft_strjoin(char const *s1, char const *s2)
+*/
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	size_t	i;
@@ -108,11 +110,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	str = (char *)malloc (sizeof(*str) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!s1 || !s2 || !str)
+	if ((!s1 && !s2) || !str)
 	{
 		return (NULL);
 	}
-	while (s1[i] != '\0')
+	while (s1 && s1[i] != '\0')
 	{
 		str[i] = s1[i];
 		i++;
@@ -125,4 +127,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str[i] = '\0';
 	return (str);
-} */
+}
