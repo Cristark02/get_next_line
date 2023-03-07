@@ -6,7 +6,7 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:23:51 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/19 17:59:31 by mmita            ###   ########.fr       */
+/*   Updated: 2023/03/07 13:27:51 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,29 @@ char	*ft_strchr(const char *s, int c)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char)c)
-			return ((char *)(s + i));
+			return ((char *)&s[i]);
 		i++;
 	}
 	if ((char)c == '\0')
 		return ((char *)(s + i));
-	else
-		return (NULL);
+	return (NULL);
 }
 
-void	*ft_bzero(void *b, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*ptr;
+	size_t	counter;
 
-	ptr = (unsigned char *)b;
-	while (n-- > 0)
-		*(ptr++) = '\0';
-	return (0);
+	counter = 0;
+	while (n != 0 && counter++ <= (n - 1))
+	{
+		*(char *)s = '\0';
+		s++;
+	}
 }
 
 void	*ft_calloc(size_t count, size_t size)
@@ -65,12 +68,11 @@ void	*ft_calloc(size_t count, size_t size)
 
 	ptr = malloc(count * size);
 	if (ptr == NULL)
-		return (0);
-	ft_bzero(ptr, (size * count));
+		return (NULL);
+	ft_bzero(ptr, (count * size));
 	return (ptr);
 }
 
-/*
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
@@ -100,7 +102,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-*/
+/*
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
@@ -128,3 +130,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
+*/

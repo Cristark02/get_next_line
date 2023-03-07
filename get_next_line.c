@@ -6,7 +6,7 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:09:12 by mmita             #+#    #+#             */
-/*   Updated: 2023/02/19 17:16:55 by mmita            ###   ########.fr       */
+/*   Updated: 2023/03/07 14:02:18 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ char	*ft_read_memory(int fd, char *memo)
 
 	byte_nbr = 1;
 	store = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!store && !ft_strchr(memo, '\n'))
-		return (0);
-	while (byte_nbr > 0)
+	if (store == NULL)
+		return (NULL);
+	while (byte_nbr > 0 && !ft_strchr(memo, '\n'))
 	{
 		byte_nbr = read(fd, store, BUFFER_SIZE);
 		if (byte_nbr == -1)
 		{
 			free(memo);
 			free(store);
-			return (0);
+			return (NULL);
 		}
-		else if (byte_nbr == 0)
+		if (byte_nbr == 0)
 			break ;
 		store[byte_nbr] = '\0';
 		memo = ft_strjoin(memo, store);
@@ -45,7 +45,7 @@ char	*ft_return_line(char *memo)
 	char	*str;
 
 	i = 0;
-	if (!memo && *memo == '\0')
+	if (!memo || *memo == '\0')
 		return (NULL);
 	while (memo[i] != '\0' && memo[i] != '\n')
 		i++;
