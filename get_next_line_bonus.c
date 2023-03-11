@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 10:09:12 by mmita             #+#    #+#             */
-/*   Updated: 2023/03/11 13:31:15 by mmita            ###   ########.fr       */
+/*   Created: 2023/03/11 13:31:29 by mmita             #+#    #+#             */
+/*   Updated: 2023/03/11 13:37:30 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ char	*ft_update_memo(char *memo)
 
 char	*get_next_line(int fd)
 {
-	static char	*memory = NULL;
+	static char	*memory[1028];
 	char		*return_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	memory = ft_read_memory (fd, memory);
-	if (!memory)
+	memory[fd] = ft_read_memory (fd, memory[fd]);
+	if (!memory[fd])
 		return (0);
-	return_line = ft_return_line (memory);
-	memory = ft_update_memo (memory);
+	return_line = ft_return_line (memory[fd]);
+	memory[fd] = ft_update_memo (memory[fd]);
 	return (return_line);
 }
