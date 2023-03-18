@@ -6,11 +6,11 @@
 /*   By: mmita <mmita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 13:31:29 by mmita             #+#    #+#             */
-/*   Updated: 2023/03/11 13:37:30 by mmita            ###   ########.fr       */
+/*   Updated: 2023/03/18 16:11:59 by mmita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_memory(int fd, char *memo)
 {
